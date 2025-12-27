@@ -17,10 +17,17 @@ namespace Tennis
         {
             var score = "";
             //players equal scores
-            score = playersHasEqualScores(score);
+            if (player1Point == player2Point && player1Point < 3) 
+            {
+                score = playersHasEqualScores(score);
+            }
             //advantage for player1 and player2 =0
-            score = player1LeadsWhenPlayer2HasNoPoints(score);
-            score = player2LeadsWhenPlayer1HasNoPoints(score);
+            else if (player1Point > 0 && player2Point == 0 || player2Point > 0 && player1Point == 0)
+            {
+                score = playerLeadsWhenTheOtherPlayerHasNoPoints(score);
+
+            }
+            // score = player2LeadsWhenPlayer1HasNoPoints(score);
             //advantage for player1 and player1<4
             score = player1LeadsWhenPlayer1HasLessThanFourPoints(score);
             score = player2LeadsWhenPlayer2HasLessThanFourPoints(score);
@@ -82,41 +89,44 @@ namespace Tennis
             return score;
         }
 
-        private string player2LeadsWhenPlayer1HasNoPoints(string score)
+        private string playerLeadsWhenTheOtherPlayerHasNoPoints(string score)
         {
-            if (player2Point > 0 && player1Point == 0)
+            string playerResult="";
+            if (player1Point > 0 && player2Point == 0 || player2Point > 0 && player1Point == 0)
             {
-                if (player2Point == 1)
-                    player2Result = "Fifteen";
-                if (player2Point == 2)
-                    player2Result = "Thirty";
-                if (player2Point == 3)
-                    player2Result = "Forty";
+                int playerPoint = player2Point> 0 ? player2Point:player1Point;
+                if (playerPoint == 1)
+                    playerResult = "Fifteen";
+                if (playerPoint == 2)
+                    playerResult = "Thirty";
+                if (playerPoint == 3)
+                    playerResult = "Forty";
 
-                player1Result = "Love";
-                score = player1Result + "-" + player2Result;
+               string ZeroPointResult = "Love";
+               score = player1Point>0? playerResult + "-" + ZeroPointResult: ZeroPointResult + "-" + playerResult;
+                //player1Result + "-" + player2Result;
             }
 
             return score;
         }
 
-        private string player1LeadsWhenPlayer2HasNoPoints(string score)
-        {
-            if (player1Point > 0 && player2Point == 0)
-            {
-                if (player1Point == 1)
-                    player1Result = "Fifteen";
-                if (player1Point == 2)
-                    player1Result = "Thirty";
-                if (player1Point == 3)
-                    player1Result = "Forty";
+        //private string player1LeadsWhenPlayer2HasNoPoints(string score)
+        //{
+        //    if (player1Point > 0 && player2Point == 0)
+        //    {
+        //        if (player1Point == 1)
+        //            player1Result = "Fifteen";
+        //        if (player1Point == 2)
+        //            player1Result = "Thirty";
+        //        if (player1Point == 3)
+        //            player1Result = "Forty";
 
-                player2Result = "Love";
-                score = player1Result + "-" + player2Result;
-            }
+        //        player2Result = "Love";
+        //        score = player1Result + "-" + player2Result;
+        //    }
 
-            return score;
-        }
+        //    return score;
+        //}
 
         private string playersHasEqualScores(string score)
         {
