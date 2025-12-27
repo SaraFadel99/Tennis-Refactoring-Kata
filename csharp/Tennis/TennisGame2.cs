@@ -16,68 +16,14 @@ namespace Tennis
         public string GetScore()
         {
             var score = "";
-            if (player1Point == player2Point && player1Point < 3)
-            {
-                if (player1Point == 0)
-                    score = "Love";
-                if (player1Point == 1)
-                    score = "Fifteen";
-                if (player1Point == 2)
-                    score = "Thirty";
-                score += "-All";
-            }
-            if (player1Point == player2Point && player1Point > 2)
-                score = "Deuce";
-
-            if (player1Point > 0 && player2Point == 0)
-            {
-                if (player1Point == 1)
-                    player1Result = "Fifteen";
-                if (player1Point == 2)
-                    player1Result = "Thirty";
-                if (player1Point == 3)
-                    player1Result = "Forty";
-
-                player2Result = "Love";
-                score = player1Result + "-" + player2Result;
-            }
-            if (player2Point > 0 && player1Point == 0)
-            {
-                if (player2Point == 1)
-                    player2Result = "Fifteen";
-                if (player2Point == 2)
-                    player2Result = "Thirty";
-                if (player2Point == 3)
-                    player2Result = "Forty";
-
-                player1Result = "Love";
-                score = player1Result + "-" + player2Result;
-            }
-
-            if (player1Point > player2Point && player1Point < 4)
-            {
-                if (player1Point == 2)
-                    player1Result = "Thirty";
-                if (player1Point == 3)
-                    player1Result = "Forty";
-                if (player2Point == 1)
-                    player2Result = "Fifteen";
-                if (player2Point == 2)
-                    player2Result = "Thirty";
-                score = player1Result + "-" + player2Result;
-            }
-            if (player2Point > player1Point && player2Point < 4)
-            {
-                if (player2Point == 2)
-                    player2Result = "Thirty";
-                if (player2Point == 3)
-                    player2Result = "Forty";
-                if (player1Point == 1)
-                    player1Result = "Fifteen";
-                if (player1Point == 2)
-                    player1Result = "Thirty";
-                score = player1Result + "-" + player2Result;
-            }
+            //players equal scores
+            score = playersHasEqualScores(score);
+            //advantage for player1 and player2 =0
+            score = player1LeadsWhenPlayer2HasNoPoints(score);
+            score = player2LeadsWhenPlayer1HasNoPoints(score);
+            //advantage for player1 and player1<4
+            score = player1LeadsWhenPlayer1HasLessThanFourPoints(score);
+            score = player2LeadsWhenPlayer2HasLessThanFourPoints(score);
 
             if (player1Point > player2Point && player2Point >= 3)
             {
@@ -97,6 +43,95 @@ namespace Tennis
             {
                 score = "Win for player2";
             }
+            return score;
+        }
+
+        private string player2LeadsWhenPlayer2HasLessThanFourPoints(string score)
+        {
+            if (player2Point > player1Point && player2Point < 4)
+            {
+                if (player2Point == 2)
+                    player2Result = "Thirty";
+                if (player2Point == 3)
+                    player2Result = "Forty";
+                if (player1Point == 1)
+                    player1Result = "Fifteen";
+                if (player1Point == 2)
+                    player1Result = "Thirty";
+                score = player1Result + "-" + player2Result;
+            }
+
+            return score;
+        }
+
+        private string player1LeadsWhenPlayer1HasLessThanFourPoints(string score)
+        {
+            if (player1Point > player2Point && player1Point < 4)
+            {
+                if (player1Point == 2)
+                    player1Result = "Thirty";
+                if (player1Point == 3)
+                    player1Result = "Forty";
+                if (player2Point == 1)
+                    player2Result = "Fifteen";
+                if (player2Point == 2)
+                    player2Result = "Thirty";
+                score = player1Result + "-" + player2Result;
+            }
+
+            return score;
+        }
+
+        private string player2LeadsWhenPlayer1HasNoPoints(string score)
+        {
+            if (player2Point > 0 && player1Point == 0)
+            {
+                if (player2Point == 1)
+                    player2Result = "Fifteen";
+                if (player2Point == 2)
+                    player2Result = "Thirty";
+                if (player2Point == 3)
+                    player2Result = "Forty";
+
+                player1Result = "Love";
+                score = player1Result + "-" + player2Result;
+            }
+
+            return score;
+        }
+
+        private string player1LeadsWhenPlayer2HasNoPoints(string score)
+        {
+            if (player1Point > 0 && player2Point == 0)
+            {
+                if (player1Point == 1)
+                    player1Result = "Fifteen";
+                if (player1Point == 2)
+                    player1Result = "Thirty";
+                if (player1Point == 3)
+                    player1Result = "Forty";
+
+                player2Result = "Love";
+                score = player1Result + "-" + player2Result;
+            }
+
+            return score;
+        }
+
+        private string playersHasEqualScores(string score)
+        {
+            if (player1Point == player2Point && player1Point < 3)
+            {
+                if (player1Point == 0)
+                    score = "Love";
+                if (player1Point == 1)
+                    score = "Fifteen";
+                if (player1Point == 2)
+                    score = "Thirty";
+                score += "-All";
+            }
+            if (player1Point == player2Point && player1Point > 2)
+                score = "Deuce";
             return score;
         }
 
